@@ -2,19 +2,20 @@
 #define MYWIDGET_H
 
 #include <QWidget>
+#include "serialport.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MyWidget; }
 QT_END_NAMESPACE
 
-class MyWidget : public QWidget
+class MyWidget : public QWidget, public PortsListener
 {
     Q_OBJECT
 
 public:
     MyWidget(QWidget *parent = nullptr);
     ~MyWidget();
-    void set_portsNameCb(const QStringList& names);
+    void update_ports(QStringList names) override;
 private:
     Ui::MyWidget *ui;
 };

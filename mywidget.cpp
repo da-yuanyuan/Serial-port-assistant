@@ -15,10 +15,10 @@ MyWidget::~MyWidget()
     delete ui;
 }
 
-void MyWidget::set_portsNameCb(const QStringList& names)
+void MyWidget::update_ports(QStringList names)
 {
+    qDebug("MyWidget  update_ports");
+    ui->portname_Cb->clear();
     ui->portname_Cb->addItems(names);
 }
-
-
 
