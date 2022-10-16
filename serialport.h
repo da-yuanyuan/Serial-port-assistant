@@ -2,14 +2,19 @@
 #define SERIALPORT_H
 #include <thread>
 #include <list>
+#include <memory>
 #include <QWidget>
+#include <QSerialPort>
 
 class PortsListener {
 public:
-    virtual void update_ports(QStringList names) {}
+    virtual void update_ports(QStringList names) = 0;
+    virtual void update_recvdata(QString data) = 0;
 };
 
-class SerialPort {
+class SerialPort :public QWidget {
+    Q_OBJECT
+
 public:
     static SerialPort& get_serialport() {
         static SerialPort port;
@@ -23,9 +28,16 @@ public:
     void remove_listen(PortsListener* lis) {
         m_listListen.remove(lis);
     }
+    bool set_port(QString name, QSerialPort::BaudRate baud, QSerialPort::DataBits data, QSerialPort::StopBits stop, QSerialPort::Parity check);
+    int write_port(QString data);
+    void close_port();
+private slots:
+    void serialportreadyread_slot(void);
+
 private:
     SerialPort();
     ~SerialPort();
+    std::shared_ptr<QSerialPort> m_Port;
     std::list<PortsListener*> m_listListen;
     bool state;
     std::thread find_port_thread;

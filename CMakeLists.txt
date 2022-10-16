@@ -19,9 +19,12 @@ set(PROJECT_SOURCES
         main.cpp
         mywidget.cpp
         mywidget.h
+        mywidget.ui
         serialport.cpp
         serialport.h
-        mywidget.ui
+        senderr.cpp
+        senderr.h
+        senderr.ui
         picture.qrc
 )
 
